@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello World</title>
+  </head>
+  <body>
+    <h6>Hello World</h6>
+
+    <button onclick="clickBtn()">Click</button>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      //   socket.on("messageFromServer", (data) => {
+      //     document.write(data.data);
+      //   });
+
+      function clickBtn() {
+        // console.log("Button clicked");
+        socket.emit("messageFromClient", { data: "Hello from client" });
+      }
+    </script>
+  </body>
+</html>
