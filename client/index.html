@@ -17,6 +17,9 @@
       //   socket.on("messageFromServer", (data) => {
       //     document.write(data.data);
       //   });
+      socket.on("message", (data) => {
+        console.log(data);
+      });
 
       function clickBtn() {
         // console.log("Button clicked");

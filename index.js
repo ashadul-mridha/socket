@@ -26,6 +26,16 @@ io.on('connection', (socket) => {
     socket.on('messageFromClient', (dataFromClient) => {
         console.log("Got sms from client",dataFromClient.data);
     })
+
+    // create room frontend and backend
+    socket.join('frontend');
+    io.sockets.in('frontend').emit('message', 'New user has joined the frontend room');
+
+    // backend room
+    socket.join('backend');
+    io.sockets.in('backend').emit('message', 'New user has joined the backend room');
+
+    // leave room
     socket.on('disconnect', () => {
         console.log('A user disconnected');
     })
