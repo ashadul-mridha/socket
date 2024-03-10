@@ -11,6 +11,11 @@ const app = express();
 const expressServer = http.createServer(app);
 const io = new Server(expressServer);
 
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/client/index.html');
+})
+// every socket tab conncect this
 io.on('connection', (socket) => {
     console.log('A user connected');
 
@@ -26,14 +31,17 @@ io.on('connection', (socket) => {
     })
 })
 
+// only frontend team can connect using this namespace
+const frontendNamespace = io.of('/frontend');
+frontendNamespace.on('connection', (socket) => {
+    socket.emit('welcome', 'Welcome to the frontend channel!');
 
-
-app.get('/aa', (req, res) => {
-    res.send('Hello World');
+    socket.on('messageFromClient', (data) => {
+        console.log('Got message from client', data);
+    })
 })
-
-app.get('/about', (req, res) => {
-    res.sendFile(__dirname + '/client/index.html');
+app.get('/frontend', (req, res) => {
+    res.sendFile(__dirname + '/client/frontend.html');
 })
 
 expressServer.listen(3000, () => {
